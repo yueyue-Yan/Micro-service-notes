@@ -8,7 +8,7 @@
 
 ## 反向代理
 
-![image-20211210162537191](README.assets\image-20211210162537191.png)
+![image-20211210162537191](README.assets/image-20211210162537191.png)
 
 
 
