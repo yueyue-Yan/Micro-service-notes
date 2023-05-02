@@ -247,7 +247,7 @@ http {
         #error_page   500 502 503 504  /50x.html;  #配置50x错误页面
         
         #精确匹配
-        # http://192.168.116.129:80/50x.html
+        # http://192.168.64.128:80/50x.html
         # html/50x.html
         location = /50x.html {
             root   html;
@@ -321,7 +321,15 @@ http {
 }
 ```
 
+匹配优先级：
+
+(location =) > (location 完整路径) > (location ^~ 路径) > (location ~,~* 正则顺序) > (location 部分起始路径) > (location /)
+
+即：（精确匹配）> (最长字符串匹配，但完全匹配) >（非正则匹配）>（正则匹配）>（最长字符串匹配，不完全匹配）>（location通配）
+
 ## 案例一、静态网站部署
+
+<img src="README.assets/a304392490972918825f9ceb0cadfd1.jpg" alt="a304392490972918825f9ceb0cadfd1 " style="zoom:80%;" />
 
 * 上传 `ace-master.zip` 到Linux服务器中
 
@@ -338,13 +346,13 @@ http {
     location / {
         # html in /usr/local/nginx/html
         # root   html;
-        # web -->  http://192.168.116.129:80/  -->  /opt/static/ace-master/index.html
+        # web -->  http://192.168.64.128:80/  -->  /opt/static/ace-master/index.html
         root   /opt/static/ace-master;
         index  index.html index.htm;
     }
     
     location /ace-master {
-        # web -->  http://192.168.116.129:80/ace-master  -->  /opt/static
+        # web -->  http://192.168.64.128:80/ace-master  -->  /opt/static
         root /opt/static;
         index index.html;
     }
@@ -353,8 +361,8 @@ http {
 
 * 启动测试
 
-  * `http://192.168.116.129` 不带项目名的静态资源访问
-  * `http://192.168.116.129/ace-master` 带项目名的静态资源访问
+  * `http://192.168.64.128` 不带项目名的静态资源访问
+  * `http://192.168.64.128/ace-master` 带项目名的静态资源访问
 
  ## 案例二、负载均衡
 
@@ -452,12 +460,12 @@ http {
 ### 静态的请求
 
 1. 通过后缀名进行区分
-   * http://192.168.116.129/myweb/image/001.jpg
+   * http://192.168.64.128/myweb/image/001.jpg
    * 访问的请求固定以 `.jpg` 后缀名结尾
    * 不推荐使用的原因，是因为后缀名太多了
    * ![image-20211211172300228](README.assets/image-20211211172300228.png)
 2. 通过目录中的关键字进行区分 `推荐`
-   * http://192.168.116.129/myweb/image/001.jpg
+   * http://192.168.64.128/myweb/image/001.jpg
    * 访问的请求路径中，包含 `image` 关键字，代表获取的是图片资源
    * ![image-20211211172650147](README.assets/image-20211211172650147.png)
 3. 创建目录，并删除Tomcat中的静态资源
@@ -477,7 +485,7 @@ http {
 
 5. 测试
    * 访问服务器
-   * http://192.168.116.129/myweb/
+   * http://192.168.64.128/myweb/
    * ![image-20211211164107392](README.assets/image-20211211164107392.png)
    * 图片资源响应状态码为403，不是404
      * 403代表权限问题，`/opt/static/myweb/image/001.jpg` 它的文件夹或图片资源的权限问题
