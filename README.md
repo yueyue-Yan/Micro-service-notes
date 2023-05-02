@@ -1,5 +1,7 @@
 # Nginx
 
+Nginx （engine x） 是一个高性能的Web服务器和反向代理服务器，也可以作为邮件代理服务器。
+
 ## 正向代理
 
 ![image-20211210162447784](README.assets/image-20211210162447784.png)
@@ -89,6 +91,7 @@
     * `--add-port=80/tcp` 开放80端口
     * `--permanent` 持久化的开放，重启之后依然生效
     * ![image-20211210172612761](README.assets/image-20211210172612761.png)
+    * 不同于在Windows中配置环境变量是立即生效的，在Linux中配置环境变量需要再在配置信息(reload)才能生效
 
 * 关闭端口访问
 
